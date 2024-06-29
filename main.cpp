@@ -15,9 +15,9 @@
 int main(int agrc, char** argv)
 {
     Eigen::MatrixXd cost_matrix = Eigen::MatrixXd::Zero(2, 3);
-    cost_matrix << 0.0, 0.1, 0.3, 0.1, 0.1, 2.1;
+    cost_matrix << 0.0, 0.1, std::numeric_limits<double>::infinity(), 0.1, 0.1, 2.1;
     std::vector<std::pair<double, std::pair<int, int>>> match_results;
-    slam::KuhnMunkrasAlgorithm KM_Algorithm(cost_matrix, true);
+    slam::KuhnMunkrasAlgorithm KM_Algorithm(cost_matrix, false);
     KM_Algorithm.FindPerfectMatchResult(match_results);
     for (const auto& match_result : match_results)
     {

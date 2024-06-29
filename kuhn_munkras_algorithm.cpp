@@ -35,7 +35,11 @@ KuhnMunkrasAlgorithm::KuhnMunkrasAlgorithm(const Eigen::MatrixXd& cost_matrix, c
             cost_matrix_(row, col) = max_cost_mode_ * cost_matrix(row, col);
             if (std::fabs(cost_matrix(row, col)) < MIN_MATCH_THRES)
             {
-                cost_matrix_(row, col) = MIN_MATCH_THRES;
+                cost_matrix_(row, col) = max_cost_mode_ * MIN_MATCH_THRES;
+            }
+            if (std::fabs(cost_matrix(row, col)) == INFINITY)
+            {
+                cost_matrix_(row, col) = max_cost_mode_ * MAX_MATCH_THRES;
             }
         }
     }
