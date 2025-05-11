@@ -20,7 +20,7 @@ int main(int agrc, char** argv)
     slam::KuhnMunkrasAlgorithm KM_Algorithm;
     KM_Algorithm.SetCostMatrix(cost_matrix);
     KM_Algorithm.FindPerfectMatchResult(match_results);
-    for (const auto& ass : match_results.assignemnt)
+    for (const auto& ass : match_results.assignment)
     {
         std::cout << "cost: " << std::get<0>(ass) << ", src_index: " << std::get<1>(ass) << ", index: " << std::get<2>(ass) << std::endl;
     }

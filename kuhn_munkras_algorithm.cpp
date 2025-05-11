@@ -166,11 +166,11 @@ bool KuhnMunkrasAlgorithm::FindPerfectMatchResult(AssociateResult& match_results
     bool   match_valid = max_cost_mode_ > 0 ? std::abs(cost) > gate_ : std::abs(cost) < gate_;
     if (match_valid) {
       if (!is_transpose_) {
-        match_results.assignemnt.emplace_back(std::make_tuple(max_cost_mode_ * cost, src_index, tar_index));
+        match_results.assignment.emplace_back(std::make_tuple(max_cost_mode_ * cost, src_index, tar_index));
         used_src.at(src_index) = true;
         used_tar.at(tar_index) = true;
       } else {
-        match_results.assignemnt.emplace_back(std::make_tuple(max_cost_mode_ * cost, tar_index, src_index));
+        match_results.assignment.emplace_back(std::make_tuple(max_cost_mode_ * cost, tar_index, src_index));
         used_src.at(tar_index) = true;
         used_tar.at(src_index) = true;
       }
@@ -190,7 +190,7 @@ bool KuhnMunkrasAlgorithm::FindPerfectMatchResult(AssociateResult& match_results
     }
   }
 
-  return !match_results.assignemnt.empty();
+  return !match_results.assignment.empty();
 }
 
 }  // namespace slam

@@ -21,7 +21,7 @@ namespace slam
 {
 
 struct AssociateResult {
-  std::vector<std::tuple<double, int, int>> assignemnt;
+  std::vector<std::tuple<double, int, int>> assignment;
   std::vector<int>                          unassignment_meas;
   std::vector<int>                          unassignment_track;
 };
