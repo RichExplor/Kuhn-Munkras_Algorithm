@@ -13,35 +13,46 @@
 
 #include <set>
 #include <vector>
+#include <tuple>
 #include <iostream>
 #include <Eigen/Geometry>
 
 namespace slam
 {
 
-class KuhnMunkrasAlgorithm
-{
+struct AssociateResult {
+  std::vector<std::tuple<double, int, int>> assignemnt;
+  std::vector<int>                          unassignment_meas;
+  std::vector<int>                          unassignment_track;
+};
+
+class KuhnMunkrasAlgorithm {
 public:
-    KuhnMunkrasAlgorithm(const Eigen::MatrixXd& cost_matrix, const bool& is_max_cost_mode);
-    ~KuhnMunkrasAlgorithm() = default;
+  KuhnMunkrasAlgorithm(const double& gate = 3.0, const bool& is_max_cost_mode = false);
+  ~KuhnMunkrasAlgorithm() = default;
 
-    bool FindPerfectMatchResult(std::vector<std::pair<double, std::pair<int, int>>>& match_results);
-
-private:
-    void KuhnMunkrasDfs();
-    bool FindPath(const int& left_index);
-    bool CostMatrixCheck(const Eigen::MatrixXd& cost_matrix);
+  void SetCostMatrix(const Eigen::MatrixXd& cost_matrix);
+  bool FindPerfectMatchResult(AssociateResult& match_results);
 
 private:
-    Eigen::MatrixXd cost_matrix_;
-    std::vector<std::pair<double, int>> left_match_index_;
-    std::vector<std::pair<double, int>> right_match_index_;
+  void KuhnMunkrasDfs();
+  bool FindPath(const int& left_index);
+  bool CostMatrixCheck(const Eigen::MatrixXd& cost_matrix);
 
-    std::vector<double> slack_;
-    std::vector<bool> s_;
-    std::vector<bool> t_;
+private:
+  Eigen::MatrixXd                     cost_matrix_;
+  std::vector<std::pair<double, int>> left_match_index_;
+  std::vector<std::pair<double, int>> right_match_index_;
 
-    double max_cost_mode_;
+  std::vector<double> slack_;
+  std::vector<bool>   s_;
+  std::vector<bool>   t_;
+  int                 row_;
+  int                 col_;
+
+  double max_cost_mode_;
+  double gate_;
+  bool   is_transpose_;
 };
 
 }  // namespace slam

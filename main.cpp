@@ -16,12 +16,13 @@ int main(int agrc, char** argv)
 {
     Eigen::MatrixXd cost_matrix = Eigen::MatrixXd::Zero(2, 3);
     cost_matrix << 0.0, 0.1, std::numeric_limits<double>::infinity(), 0.1, 0.1, 2.1;
-    std::vector<std::pair<double, std::pair<int, int>>> match_results;
-    slam::KuhnMunkrasAlgorithm KM_Algorithm(cost_matrix, false);
+    slam::AssociateResult match_results;
+    slam::KuhnMunkrasAlgorithm KM_Algorithm;
+    KM_Algorithm.SetCostMatrix(cost_matrix);
     KM_Algorithm.FindPerfectMatchResult(match_results);
-    for (const auto& match_result : match_results)
+    for (const auto& ass : match_results.assignemnt)
     {
-        std::cout << "cost: " << match_result.first << ", index: " << match_result.second.first << ", index: " << match_result.second.second << std::endl;
+        std::cout << "cost: " << std::get<0>(ass) << ", src_index: " << std::get<1>(ass) << ", index: " << std::get<2>(ass) << std::endl;
     }
     return 0;
 }
